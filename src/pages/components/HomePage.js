@@ -6,7 +6,6 @@ export default function HomePage() {
 
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
   
   useEffect(() => {
     fetch('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1')
@@ -19,6 +18,7 @@ export default function HomePage() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+  
 
     if (searchTerm === undefined || searchTerm === "") {
       return; // stop
@@ -31,6 +31,7 @@ export default function HomePage() {
         });
       setSearchTerm("");
     }
+   
   };
 
   const handleOnChange = (e) => {

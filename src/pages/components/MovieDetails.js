@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
 
 export default function MovieDetails() {
-  const params = useParams();
-  const [movieDetails, setMovieDetails] = useState({
-    data: null,
-    status: "idle",
-  });
+  const [movie, setMovie] = useState({});
+  const routeParameters = useParams();
+  console.log(routeParameters);
 
   useEffect(() => {
-    async function fetchDetails() {
+    async function fetchMovieById(imdbID) {
+      console.log("DO I HAVE ANY ID?", imdbID);
       const response = await axios.get(
-        `http://www.omdbapi.com/?i=${params.imdbID}&apikey=a7462395`
+        `http://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=a7462395`
       );
-      console.log(response);
-      setMovieDetails({ status: "success", data: response.data });
+
+      console.log(response.data);
+      setMovie(response.data);
     }
 
-    fetchDetails();
-  }, [params.imdbID]);
+    fetchMovieById(routeParameters.imdbID);
+  }, []);
 
-  console.log(movieDetails);
-
-  console.log("WHAT ARE PARAMS:", params); // -> what data? object, string?
   return (
     <div>
-      <h1>{movieDetails.data?.Title}</h1>
-      <p>{movieDetails.data?.Plot}</p>
+      <Link to="/movies">See all movies</Link>
+      <div>
+        <img src={movie.Poster} />
+        <p>{movie.Plot}</p>
+      </div>
     </div>
   );
-}
+} 

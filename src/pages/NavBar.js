@@ -14,18 +14,13 @@ export default function NavBar() {
             </NavLink>
           </li>
           <li className='nav-item'>
-        <NavLink to="/about" activeStyle={{ color: "red" }}>
-          <h1>About</h1>
-          </NavLink>
-          </li>
-          <li className='nav-item'>
         <NavLink to="/discover" activeStyle={{ color: "red" }}>
-          <h1>Movie Details</h1>
+          <h1>Movie Details Search</h1>
           </NavLink>
             </li>
           </ul>
-        </div>
-      </nav>
+          </div>
+          </nav>
     </>
   );
 }

@@ -4,21 +4,19 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 export default function DiscoverMoviesPage() {
   const params = useParams();
-  const [movies, setMovies] = useState({ status: "idle", data: [] });
+  const [movies, setMovies] = useState({ status: "", data: [] });
   const [searchText, setSearchText] = useState(params.query || "");
   const history = useHistory();
 
-  console.log("PARAMS:", params); //
+  console.log("PARAMS:", params); 
 
   useEffect(() => {
-    // console.log("I AM A SIDEFFECT, I GOT RUN");
     if (params.query === undefined || params.query === "") {
       return; // stop
     }
 
     async function fetchMovies() {
       setMovies({ status: "loading", data: [] });
-      //   console.log("hello students, I am checking this bit");
       try {
         const response = await axios.get(
           `http://www.omdbapi.com/?s=${params.query}&y=2018&apikey=a7462395`
@@ -32,7 +30,7 @@ export default function DiscoverMoviesPage() {
             message: response.data.Error,
           });
         } else {
-          setMovies({ status: "success", data: response.data.Search });
+          setMovies({ status: "", data: response.data.Search });
         }
       } catch (error) {
         setMovies({
@@ -45,12 +43,7 @@ export default function DiscoverMoviesPage() {
     }
 
     fetchMovies();
-  }, [params.query]); // everytime params.query changes, run the effect again
-
-  // console.log("STATE:", movies);
-  // if (movies.data === null) {
-  //   return <div>{movies.status}</div>;
-  // }
+  }, [params.query]); 
 
   function search() {
     console.log(searchText); // add to the url
@@ -59,9 +52,10 @@ export default function DiscoverMoviesPage() {
 
   return (
     <div>
-      Discover
+      <h1>Discover</h1>
       <div>{movies.status === "error" ? movies.message : movies.status}</div>
       <input
+        placeholder="Type to search a movie"
         value={searchText}
         onChange={(event) => setSearchText(event.target.value)}
       />
